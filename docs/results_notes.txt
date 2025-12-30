@@ -1,0 +1,41 @@
+Mental Health Screening Analysis – Key Results
+NHANES 2017–2018 (Adults 18+)
+
+Dataset overview:
+- Source: NHANES 2017–2018
+- Analytic sample: Adults (age ≥ 18) with complete PHQ-9 data
+- Final sample size: 5,068 individuals
+
+Depression severity:
+- Clinically significant depressive symptoms (PHQ-9 ≥ 10):
+  - n = 459 (9.1% of sample)
+- High-risk depressive symptoms (PHQ-9 ≥ 15):
+  - n = 167 (3.3% of sample)
+
+Treatment access proxy:
+- Treatment defined as self-reported contact with a mental health professional
+  in the past 12 months (HUQ090).
+- This proxy captures access/contact, not treatment quality or duration.
+
+Treatment gap findings:
+- Among adults with PHQ-9 ≥ 10:
+  - 314 out of 459 were not in treatment
+  - 68.41% reported no mental health professional contact in the past year
+
+- Among adults with PHQ-9 ≥ 15:
+  - 104 out of 167 were not in treatment
+  - 62.28% reported no mental health professional contact in the past year
+
+Key interpretation:
+- A majority of adults with clinically significant depressive symptoms are not
+  receiving mental health care.
+- Even among high-risk individuals, most reported no recent mental health
+  professional contact.
+- These findings highlight a substantial treatment access gap in the U.S.
+  adult population.
+
+Caveats:
+- PHQ-9 is a screening tool, not a diagnostic instrument.
+- HUQ090 reflects mental health professional contact, not medication use,
+  diagnosis, or continuity of care.
+- Cross-sectional survey data; causal conclusions cannot be drawn.
