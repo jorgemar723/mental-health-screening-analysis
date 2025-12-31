@@ -1,107 +1,122 @@
-### Mental Health Screening Analysis (NHANES 2017–2018)
+# Mental Health Screening Analysis
 
-# Overview
+**A healthcare data analytics project examining depression severity and treatment access gaps using NHANES 2017–2018 data**
 
-This project analyzes nationally representative U.S. survey data to examine the prevalence of depressive symptoms and gaps in mental health treatment access among adults. Using validated screening tools and healthcare utilization data, the analysis focuses on identifying treatment gaps among individuals with clinically significant and high-risk depressive symptoms.
+---
 
-The goal of this project is to demonstrate an end-to-end healthcare data analytics workflow, from raw data ingestion to analytic dataset construction, statistical analysis, and stakeholder-ready reporting.
+## Project Overview
 
-# Data Source
+This project analyzes mental health screening data from the National Health and Nutrition Examination Survey (NHANES) 2017–2018 to examine depression severity and gaps in mental health treatment access among U.S. adults. Using Patient Health Questionnaire-9 (PHQ-9) scores and healthcare utilization data, the analysis identifies disparities in mental health service access across demographic groups.
 
-National Health and Nutrition Examination Survey (NHANES) 2017–2018
+The analysis combines:
+- **SQL (DuckDB)** for efficient data querying and analytic table construction
+- **R** for statistical modeling, feature engineering, and regression analysis
+- **Tableau** for interactive stakeholder dashboards and demographic breakdowns
 
-Publicly available data collected by the Centers for Disease Control and Prevention (CDC)
+---
 
-Population: U.S. adults aged 18 years and older
+## Key Findings
 
-Key NHANES files used:
+### Sample Characteristics
 
-DPQ_J: Depression Screener (PHQ-9)
+- **Analytic sample:** 5,068 U.S. adults aged 18+ with complete PHQ-9 data
+- **Depression prevalence:**
+  - 459 adults (9.1%) had clinically significant depressive symptoms (PHQ-9 ≥ 10)
+  - 167 adults (3.3%) met high-risk criteria for severe depression (PHQ-9 ≥ 15)
 
-DEMO_J: Demographics
+### Treatment Access Gaps
 
-HUQ_J: Health Care Utilization
+Among adults with clinically significant depression:
+- **68.4%** of those with PHQ-9 ≥ 10 reported no mental health professional contact in the past year
+- **62.3%** of those with PHQ-9 ≥ 15 (high-risk) reported no mental health professional contact in the past year
 
-All data used in this project are de-identified and publicly accessible.
+---
 
-# Methods
+## Statistical Analysis
 
-Depression Screening
+### Regression Modeling
 
-Depressive symptom severity was measured using the Patient Health Questionnaire-9 (PHQ-9), a validated mental health screening instrument widely used in clinical and public health settings.
+**Outcome variable:** Not receiving mental health treatment (binary)
 
-Severity categories:
+**Covariates tested:**
+- PHQ-9 severity category (minimal, mild, moderate, moderately severe, severe)
+- Sex
+- Age group
+- Race/ethnicity
 
-Minimal: 0–4
+**Models compared:**
+- **Baseline model:** Depression severity + sex + age group + race/ethnicity
+- **Interaction model:** Depression severity × sex + age group + race/ethnicity
 
-Mild: 5–9
+**Model selection:**
+- Likelihood ratio test comparing baseline vs. interaction model: *p* = 0.57
+- Interaction model showed higher AIC (worse fit)
+- **Baseline model retained** (no evidence of severity-by-sex interaction)
 
-Moderate: 10–14
+### Key Results
 
-Moderately Severe: 15–19
+**Depression severity** was strongly associated with treatment status:
+- Compared to adults with mild symptoms (PHQ-9 5–9):
+  - **Minimal symptoms** (PHQ-9 0–4): ~3× higher odds of being untreated (OR ≈ 3.05)
+  - **Moderate, moderately severe, and severe categories were associated with lower odds of being untreated (OR < 1)
 
-Severe: 20–27
+**Age** was a significant predictor:
+- Adults aged **66+ had significantly higher odds of being untreated** (OR ≈ 2.10)
 
-Two clinically relevant groups were defined:
+**Race/ethnicity** showed adjusted differences:
+- Non-Hispanic White and Non-Hispanic Black adults had lower odds of being untreated compared to Mexican American adults
 
-Clinically significant symptoms: PHQ-9 ≥ 10
+**Sex** was not a statistically significant predictor after adjustment for other covariates.
 
-High-risk symptoms: PHQ-9 ≥ 15
+---
 
-Only participants with complete PHQ-9 responses were included in the analytic sample.
+## Visualization & Dashboards
 
-# Treatment Access Proxy
+Interactive Tableau dashboards enable exploration of treatment gaps and depression severity across demographic subgroups. Users can filter by:
+- PHQ-9 severity category
+- Age group
+- Sex
+- Race/ethnicity
 
-Mental health treatment access was proxied using self-reported contact with a mental health professional in the past 12 months (NHANES variable HUQ090).
+Dashboard screenshots are included in the `tableau/` folder for reference.
 
-This measure captures recent mental health service contact but does not reflect treatment quality, diagnosis, or continuity of care.
+---
 
-# Analytic Sample
+## Repository Structure
+```
+mental-health-screening-analysis/
+├── r/                  # Data processing and statistical analysis scripts
+├── sql/                # DuckDB queries for analytic table construction
+├── outputs/            # Regression model results and summary tables
+├── tableau/            # Dashboard screenshots
+└── docs/               # Interpretation notes
 
-Adults aged 18+
+```
 
-Complete PHQ-9 data
+---
 
-Final sample size: 5,068 individuals
+## Reproducibility & Data Management
 
-# Key Findings
+**Raw NHANES data files are not included in this repository.** 
 
-Depression Severity
+All analytic datasets are generated locally using the provided SQL and R scripts.  
+Processed outputs, regression results, and dashboard screenshots are included in the repository for transparency.
 
-459 adults (9.1%) had clinically significant depressive symptoms (PHQ-9 ≥ 10)
 
-167 adults (3.3%) met high-risk criteria (PHQ-9 ≥ 15)
+---
 
-# Treatment Gaps
+## Project Scope & Applications
 
-Among adults with PHQ-9 ≥ 10:
+This project demonstrates:
+- **End-to-end healthcare data analytics** from raw survey data to stakeholder-ready dashboards
+- **Mental health screening analysis** using validated psychiatric instruments (PHQ-9)
+- **Applied statistical modeling** including logistic regression and interaction testing
+- **Healthcare informatics skills** relevant to population health, health services research, and clinical analytics
 
-68.4% reported no mental health professional contact in the past year
+This work is relevant for roles in healthcare analytics, health information management, public health informatics, and behavioral health data science.
 
-Among adults with PHQ-9 ≥ 15:
+---
 
-62.3% reported no mental health professional contact in the past year
+## About
 
-These results indicate that a majority of adults with moderate to severe depressive symptoms are not receiving mental health care, highlighting a substantial treatment access gap.
-
-# Tools and Technologies
-
-R: Data ingestion, cleaning, feature engineering, and statistical analysis
-
-DuckDB SQL: Analytic dataset construction and transformation
-
-Power BI: Interactive dashboards and stakeholder-focused visualizations
-
-GitHub: Version control and project documentation
-
-# Limitations
-
-PHQ-9 is a screening tool and does not constitute a clinical diagnosis
-
-Treatment access is based on self-reported survey responses
-
-Cross-sectional survey data limits causal interpretation
-
-# Project Purpose
-
-This project was developed as a portfolio piece to demonstrate applied healthcare data analytics skills, with a focus on mental health screening, data quality, and treatment access analysis.
+Developed as a portfolio project to demonstrate applied healthcare data science skills. This analysis uses publicly available NHANES data and follows best practices for reproducible research in health informatics.
